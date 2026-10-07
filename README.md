@@ -61,11 +61,12 @@ Results are written to `imputation_results/all_results.csv` (per-seed) and `stat
 ## Citation
 
 ```bibtex
-@inproceedings{kim2026mdtim,
-  title     = {Discretizing Continuous Time Series for Imputation with Masked Diffusion Training},
-  author    = {Kim, Dongbin and Lee, Seungyun and Shin, Geonwoo and Lee, Jaewook},
-  booktitle = {Advances in Neural Information Processing Systems},
-  year      = {2026}
+@inproceedings{
+kim2026discretizing,
+title={Discretizing Continuous Time Series for Imputation with Masked Diffusion Training},
+author={Dongbin Kim and Seungyun Lee and Geonwoo Shin and Jaewook Lee},
+booktitle={The Fortieth Annual Conference on Neural Information Processing Systems},
+year={2026}
 }
 ```
 
