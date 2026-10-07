@@ -217,18 +217,15 @@
   <section>
     <div class="container">
       <h2>Results</h2>
-      <div class="two-col">
-        <div class="figure"><img src="static/images/uniform_missing.png" alt="MAE under uniform missingness"></div>
-        <div class="figure"><img src="static/images/geometric_missing.png" alt="MAE under geometric missingness"></div>
-      </div>
-      <p class="caption"><b>Robustness to missingness.</b> MAE as the missing rate grows from 30% to 70% under
-      uniform (left) and geometric (right) masking. The discrete formulation, MDTIM (Disc), outperforms SAITS,
-      CSDI, and its own continuous control MDTIM (Cont) at every rate, with the margin widening at severe
-      missingness.</p>
       <div class="figure">
         <img src="static/images/imputation_example.png" alt="Imputation example on ETTh">
         <p class="caption"><b>Qualitative example.</b> MDTIM reconstructions with calibrated uncertainty bands
         (1&sigma;, 2&sigma;) against ground truth on ETTh.</p>
+      </div>
+      <div class="figure">
+        <img src="static/images/table.png" alt="Main imputation results table (MAE)">
+        <p class="caption"><b>Main results.</b> MAE on missing positions across four benchmarks under uniform
+        and geometric masking at 30% and 70% missing rates. Best results in bold, second best underlined.</p>
       </div>
     </div>
   </section>
