@@ -22,14 +22,13 @@ Training combines an ordinal-aware soft-label cross-entropy with a spectral (FFT
 
 ## Imputation Results
 
-MDTIM consistently outperforms state-of-the-art deterministic and generative baselines across missing scenarios, with the margin widening at severe missingness.
-
-<p align="center">
-<img src="docs/static/images/uniform_missing.png" width="42%">
-<img src="docs/static/images/geometric_missing.png" width="42%">
-</p>
+MDTIM reconstructions with calibrated uncertainty bands (1σ, 2σ) against ground truth on ETTh:
 
 <img src="docs/static/images/imputation_example.png">
+
+MAE on missing positions across four benchmarks under uniform and geometric masking (best in bold, second best underlined):
+
+<img src="docs/static/images/table.png">
 
 ## Getting Started
 
