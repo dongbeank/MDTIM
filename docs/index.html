@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MDTIM: Discretizing Continuous Time Series for Imputation with Masked Diffusion Training</title>
+  <meta name="description" content="MDTIM adapts masked discrete diffusion to continuous time series imputation via Stochastic Discretization.">
+  <meta property="og:title" content="MDTIM: Masked Diffusion Time-series Imputation">
+  <meta property="og:description" content="Discretizing Continuous Time Series for Imputation with Masked Diffusion Training">
+  <meta property="og:image" content="static/images/framework.png">
+  <style>
+    :root {
+      --text: #1f2430;
+      --muted: #5b6372;
+      --accent: #2456d6;
+      --bg: #ffffff;
+      --card: #f5f6f9;
+      --border: #e3e6ec;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    .container { max-width: 920px; margin: 0 auto; padding: 0 1.25rem; }
+    header { padding: 3.5rem 0 2rem; text-align: center; }
+    h1 { font-size: 2rem; line-height: 1.3; font-weight: 700; margin-bottom: 1.1rem; }
+    .venue { display: inline-block; font-size: 0.95rem; color: var(--accent); font-weight: 600;
+             border: 1px solid var(--accent); border-radius: 999px; padding: 0.15rem 0.9rem; margin-bottom: 1.2rem; }
+    .authors { font-size: 1.08rem; margin-bottom: 0.3rem; }
+    .authors a { color: var(--accent); text-decoration: none; }
+    .authors a:hover { text-decoration: underline; }
+    .affil { color: var(--muted); font-size: 0.98rem; margin-bottom: 1.4rem; }
+    .links { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: #22252b; color: #fff; text-decoration: none;
+      padding: 0.5rem 1.15rem; border-radius: 999px; font-size: 0.95rem; font-weight: 500;
+      transition: background .15s;
+    }
+    .btn:hover { background: var(--accent); }
+    section { padding: 1.6rem 0; }
+    h2 { font-size: 1.45rem; margin-bottom: 0.9rem; text-align: center; }
+    .figure { margin: 1.2rem 0; text-align: center; }
+    .figure img { max-width: 100%; height: auto; border-radius: 8px; }
+    .caption { font-size: 0.92rem; color: var(--muted); margin-top: 0.6rem; text-align: left; }
+    .caption b { color: var(--text); }
+    .abstract p { text-align: justify; font-size: 1.02rem; }
+    .highlight-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.2rem; }
+    .card h3 { font-size: 1.02rem; margin-bottom: 0.45rem; }
+    .card p { font-size: 0.93rem; color: var(--muted); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+    pre.bibtex {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.1rem 1.3rem; font-size: 0.86rem; overflow-x: auto;
+      font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    }
+    footer { padding: 2.5rem 0 2rem; text-align: center; color: var(--muted); font-size: 0.88rem; }
+    footer a { color: var(--accent); text-decoration: none; }
+    hr.sep { border: 0; border-top: 1px solid var(--border); margin: 0.8rem 0; }
+  </style>
+</head>
+<body>
+
+  <header class="container">
+    <div class="venue">NeurIPS 2026</div>
+    <h1>Discretizing Continuous Time Series for Imputation<br>with Masked Diffusion Training</h1>
+    <p class="authors">
+      Dongbin Kim, &nbsp; Seungyun Lee, &nbsp; Geonwoo Shin, &nbsp; Jaewook Lee<sup>*</sup>
+    </p>
+    <p class="affil">Seoul National University &nbsp;·&nbsp; <sup>*</sup>Corresponding author</p>
+    <div class="links">
+      <!-- TODO: add arXiv button when the arXiv ID exists; update Code href -->
+      <a class="btn" href="https://openreview.net/forum?id=pKTszDf7fn">📄 Paper</a>
+      <a class="btn" href="https://github.com/dongbeank/MDTIM">&lt;/&gt; Code</a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section>
+      <div class="figure">
+        <img src="static/images/framework.png" alt="MDTIM framework overview">
+        <p class="caption"><b>Overview of MDTIM.</b> A masked time series is mapped to ordinal tokens by
+        Stochastic Discretization, embedded by the Discretized Embedder, and processed by a factorized
+        backbone interleaving temporal and variate encoders. Training combines an ordinal-aware soft-label
+        cross-entropy with a spectral (FFT) consistency loss, and continuous values are reconstructed as the
+        expectation over the predicted bin distribution.</p>
+      </div>
+    </section>
+
+    <section class="abstract">
+      <h2>Abstract</h2>
+      <p>
+        Time series imputation is a crucial area for reliable time series analysis, yet it remains challenging
+        due to the complex temporal dynamics and noise of real-world data. Existing approaches, however,
+        exhibit two limitations: missing and observed values are embedded within the same representation
+        space without explicit structural separation, and continuous diffusion-based methods are trained to
+        predict added noise rather than the original signal. To address these, we propose the
+        <b>Masked Diffusion Time-series Imputation Model (MDTIM)</b>, which leverages the training paradigm of
+        masked diffusion models for imputation tasks. The <code>[MASK]</code> token is structurally orthogonal
+        to valid observations, and the model directly predicts the original values, naturally aligning both the
+        representation and the learning objective with the imputation task. To bridge the gap between discrete
+        masked diffusion and the continuous, ordinal nature of time series, we further introduce
+        <b>Stochastic Discretization</b>, which maps continuous values to ordinal-aware tokens while preserving
+        continuous dynamics. Our experiments on diverse benchmarks confirm that MDTIM achieves superior
+        robustness and scalability, consistently outperforming state-of-the-art deterministic and generative
+        baselines across various missing scenarios.
+      </p>
+      <div class="highlight-cards">
+        <div class="card">
+          <h3>Structural separation</h3>
+          <p>The absorbing <code>[MASK]</code> token is orthogonal to every observed value — the model always
+          knows what is missing, with no indicator heuristics.</p>
+        </div>
+        <div class="card">
+          <h3>Signal-aligned objective</h3>
+          <p>MDTIM predicts the original values directly instead of added noise, matching the training
+          objective to the imputation task.</p>
+        </div>
+        <div class="card">
+          <h3>Ordinal-aware tokens</h3>
+          <p>Stochastic Discretization and soft labels preserve the continuous, ordinal structure of the
+          signal inside a discrete token space.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Stochastic Discretization</h2>
+      <div class="figure">
+        <img src="static/images/stochastic_discretization.png" alt="Stochastic discretization pipeline">
+        <p class="caption"><b>From continuous values to ordinal-aware tokens.</b> Observed values are
+        normalized and perturbed with bounded uniform noise, discretized into token bins, and supervised with
+        ordinal-aware soft labels centered on the true bin — keeping the quantization differentiable in effect
+        while the <code>[MASK]</code> state stays strictly separate.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Results</h2>
+      <div class="two-col">
+        <div class="figure">
+          <img src="static/images/uniform_missing.png" alt="MAE under uniform missingness">
+        </div>
+        <div class="figure">
+          <img src="static/images/geometric_missing.png" alt="MAE under geometric missingness">
+        </div>
+      </div>
+      <p class="caption"><b>Robustness to missingness.</b> MAE as the missing rate grows from 30% to 70%
+      under uniform (left) and geometric (right) masking. The discrete formulation, MDTIM (Disc), outperforms
+      SAITS, CSDI, and its own continuous control MDTIM (Cont) at every rate, with the margin widening at
+      severe missingness.</p>
+      <div class="figure">
+        <img src="static/images/imputation_example.png" alt="Imputation example on ETTh">
+        <p class="caption"><b>Qualitative example.</b> MDTIM reconstructions (with uncertainty) against ground
+        truth on ETTh.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>BibTeX</h2>
+      <pre class="bibtex">@inproceedings{kim2026mdtim,
+  title     = {Discretizing Continuous Time Series for Imputation with Masked Diffusion Training},
+  author    = {Kim, Dongbin and Lee, Seungyun and Shin, Geonwoo and Lee, Jaewook},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year      = {2026}
+}</pre>
+    </section>
+
+  </main>
+
+  <footer>
+    <hr class="sep">
+    <p class="container">Seoul National University · NeurIPS 2026<br>
+    Code released under the MIT License — <a href="https://github.com/dongbeank/MDTIM">github.com/dongbeank/MDTIM</a></p>
+  </footer>
+
+</body>
+</html>
