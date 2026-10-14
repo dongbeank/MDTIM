@@ -1,0 +1,14 @@
+torch>=2.2
+lightning>=2.2
+flash-attn>=2.5  # install after torch: pip install flash-attn --no-build-isolation
+einops>=0.7
+omegaconf>=2.3
+timm>=0.9
+torchmetrics>=1.0
+huggingface_hub
+fsspec
+numpy
+pandas
+scipy
+scikit-learn
+tqdm

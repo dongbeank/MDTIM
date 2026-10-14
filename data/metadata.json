@@ -1,0 +1,12 @@
+{
+  "n_steps": 48,
+  "n_features": 35,
+  "n_train": 2557,
+  "n_val": 640,
+  "n_test": 800,
+  "train_missing_rate": 0.8043801329683222,
+  "val_missing_rate": 0.8049544270833333,
+  "test_missing_rate": 0.8078891369047619,
+  "scaler": "StandardScaler",
+  "source": "PhysioNet Challenge 2012"
+}
